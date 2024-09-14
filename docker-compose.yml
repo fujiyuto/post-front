@@ -1,0 +1,18 @@
+services:
+    post-front:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "3300:3000"
+        command: sh -c "npm run dev"
+        volumes:
+            - .:/app
+        networks:
+            - local-network
+
+networks:
+    local-network:
+        external: true
+        
+
