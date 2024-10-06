@@ -1,9 +1,8 @@
 import React from 'react'
-import { TopPage } from '@/pages/TopPage'
 
 const Page = () => {
     return (
-        <TopPage/>
+        <div>パスワード変更完了画面</div>
     )
 }
 

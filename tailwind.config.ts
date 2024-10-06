@@ -11,6 +11,13 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        theme: '#a0db7a',
+        subTheme: '#feffeb',
+        black: '#525252',
+        white: '#ffffff',
+        red: '#ff0000',
+        gray: '#d5d5d5',
+        formLine: '#c8c8c8'
       },
     },
   },
