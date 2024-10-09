@@ -3,14 +3,15 @@
 import React, { FormEventHandler, useEffect, useState } from 'react'
 import { FormControl, Button, Input } from '@mui/base'
 import Link from 'next/link'
-import { signIn, getCsrfToken } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { HelperText } from '@/components/HelperText'
 
 
 export const LoginPage = () => {
-    const [nextCsrf, setNextCsrf] = useState('')
     const router = useRouter()
-    
+    const [isDispHelperText, setIsDispHelperText] = useState<boolean>(false)
+    const [helperText, setHelperText] = useState<string>('')
+
     useEffect(() => {
         
         const getCsrf = async () => {
@@ -21,48 +22,32 @@ export const LoginPage = () => {
                 }
                 
             )
-            console.log(res)
         }
         getCsrf()
         
     }, [])
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-        console.log('bbb')
-
+    
         e.preventDefault()
 
+        const form = e.currentTarget
         const formData = new FormData(e.currentTarget)
 
-        await signIn('credential', {
-            email: formData.get('email'),
-            password: formData.get('password'),
-            callbackUrl: '/'
-        })
-        .then( res => {
-            console.log(res)
-        })
-        .catch( err => {
-            console.log(err)
-        })
-        
-        // const res = await signIn(
-        //     'Credentials', 
-        //     { 
-        //         email: formData.get('email'),
-        //         password: formData.get('password'),
-        //         redirect: false, 
-        //         callbackUrl: 'http://localhost:3000' 
-        //     }
-        // )
+        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/login`, { method: 'POST', body: formData })
 
-        // if ( res?.error ) {
-        //     console.log(res.error)
-        // }
+        const result = await res.json()
+
+        if ( res.status != 200 ) {
+            setIsDispHelperText(true)
+            setHelperText(result.message)
+        } else {
+            router.push('/')
+        }
     }
 
     return (
-        <div className='flex justify-center items-center h-screen text-black'>
+        <div className='flex justify-center items-center h-[calc(100vh-64px)] text-black'>
             <div className='w-3/4 xl:w-[72rem] py-12 border-2 border-gray'>
                 <h3 className='mb-6 text-2xl font-semibold text-center'>ログイン</h3>
                 <div className='flex justify-center items-center divide-x divide-solid divide-gray'>
@@ -71,6 +56,11 @@ export const LoginPage = () => {
                             <div className='flex flex-col gap-10'>
                                 <div className='flex flex-col gap-6'>
                                     <div className='flex flex-col gap-2'>
+                                        {
+                                            isDispHelperText && (
+                                                <HelperText message={helperText}/>
+                                            )
+                                        }
                                         <FormControl className='text-black' required>
                                             <label htmlFor="" className='font-semibold'>メールアドレス</label>
                                             <Input
@@ -78,7 +68,7 @@ export const LoginPage = () => {
                                                 type='email'
                                                 slotProps={{
                                                     input: {
-                                                        className: 'w-full shadow border-formLine rounded p-1.5 focus:outline-none focus:ring focus:border-gray-300 focus:ring-slate-300 focus:ring-1'
+                                                        className: 'w-full shadow border-formLine rounded p-1.5 focus:outline-none focus:ring focus:border-gray-300 focus:ring-slate-300 focus:ring-1 autofill:bg-white'
                                                     }
                                                 }}
                                             />

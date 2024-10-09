@@ -25,8 +25,7 @@ export const TopPage = () => {
     return (
         <div>
             TopPage
-            <Button onClick={() => signIn()} className='px-6 py-2 rounded text-white bg-black'>新規会員登録</Button>
-            {/* <Button slots={{root: 'a'}} href='/users/login' className='px-6 py-2 rounded text-white bg-black'>新規会員登録</Button> */}
+            
         </div>
     )
 }
