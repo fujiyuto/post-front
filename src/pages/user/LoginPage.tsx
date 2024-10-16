@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import React, { FormEventHandler, useEffect, useState } from 'react'
 import { FormControl, Button, Input } from '@mui/base'
@@ -19,8 +19,7 @@ export const LoginPage = () => {
                 `${process.env.NEXT_PUBLIC_APP_URL}/api/csrf`,
                 {
                     method: "GET",
-                }
-                
+                } 
             )
         }
         getCsrf()

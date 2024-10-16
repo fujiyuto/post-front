@@ -2,10 +2,11 @@ import { axiosInstance } from "../axiosConf"
 import { NextResponse } from "next/server"
 
 export async function GET( request: Request ) {
-    const res = await axiosInstance.get('/api/restaurants')
-    // const res = await axios.get(`${process.env.API_URL}/sanctum/csrf-cookie`)
-    // console.log((await res).status)
-    console.log(res.data.data)
+    const { searchParams } = new URL(request.url)
+    const gun = searchParams.get('gun') ?? ''
+    const res = await axiosInstance.get(`/api/restaurants?gun=${gun}`)
 
-    return Response.json({message: 'hello'})
+    console.log(res.data)
+
+    return NextResponse.json(res.data)
 }

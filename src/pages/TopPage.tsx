@@ -3,7 +3,7 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { Button } from '@mui/base'
-import { signIn } from 'next-auth/react'
+import ModalUnstyled from '@/components/Test'
 
 export const TopPage = () => {
     useEffect(() => {
@@ -13,19 +13,18 @@ export const TopPage = () => {
                 {
                     method: "GET"
                 }
-                
             )
 
             console.log(res)
         }
 
-        getRestaurants()
+        // getRestaurants()
     }, [])
 
     return (
         <div>
             TopPage
-            
+            <ModalUnstyled/>
         </div>
     )
 }

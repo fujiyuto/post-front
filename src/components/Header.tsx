@@ -1,12 +1,15 @@
-"use client"
+'use client'
 
-import React, { useState } from 'react'
-import { SessionProvider, useSession, signIn } from 'next-auth/react'
+import clsx from 'clsx'
+import React, { useState, createContext } from 'react'
 import Link from 'next/link'
-import { Modal } from '@mui/base/Modal'
+import { Modal } from '@mui/base'
 import { Fade } from '@mui/material';
-import { Search } from './Search'
+import { SearchGenre } from './Search/Search'
+import { SearchGenreModal } from './Modal/SearchGenreModal'
 
+export const GenreContext = createContext<() => void>(() => {})
+export const LocateContext = createContext<() => void>(() => {})
 
 export const Header = () => {
     const [openGenre, setOpenGenre] = useState<boolean>(false)
@@ -16,7 +19,7 @@ export const Header = () => {
     const [openLocate, setOpenLocate] = useState<boolean>(false)
     const handleLocateOpen = () => setOpenLocate(true)
     const handleLocateClose = () => setOpenLocate(false)
-
+    
     const [openKeyword, setOpenkeyword] = useState<boolean>(false)
     const handleKeywordOpen = () => setOpenkeyword(true)
     const handleKeywordClose = () => setOpenkeyword(false)
@@ -41,19 +44,11 @@ export const Header = () => {
                     <Link href='/users/login'>ログイン</Link>
                 </li>
             </ul>
-            <Modal
-                open={openGenre}
-                onClose={handleGenreClose}
-                closeAfterTransition
-            >
-                <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-                    <Fade in={openGenre}>
-                        <div>
-                            <Search mode='genre'/>
-                        </div>
-                    </Fade>
-                </div>
-            </Modal>
+            <GenreContext.Provider value={handleGenreClose}>
+                <SearchGenreModal
+                    open={openGenre}
+                />
+            </GenreContext.Provider>
             <Modal
                 open={openLocate}
                 onClose={handleLocateClose}
@@ -61,7 +56,7 @@ export const Header = () => {
             >
                 <Fade in={openLocate}>
                     <div>
-                        <Search mode='locate'/>
+                        
                     </div>
                 </Fade>
             </Modal>
@@ -72,10 +67,25 @@ export const Header = () => {
             >
                 <Fade in={openKeyword}>
                     <div>
-                        <Search mode='keyword'/>
+                        
                     </div>
                 </Fade>
             </Modal>
         </header>
     )
 }
+
+interface BackdropProps {
+    open: boolean
+    onClick: () => void
+}
+const Backdrop = React.forwardRef<HTMLDivElement,BackdropProps>((props, ref) => {
+    const { open, onClick } = props
+    return (
+       <div 
+        className={clsx({ 'base-Backdrop-open': open }, '-z-10 fixed inset-0 bg-black opacity-30')}
+        ref={ref}
+        onClick={onClick}
+        />
+    )
+})
