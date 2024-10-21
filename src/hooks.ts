@@ -1,28 +1,23 @@
 import useSWR from 'swr'
-import { GetGenreGroupData, GetRestaurants } from './types'
+import { GenreGroupDataValue, GetGenreGroupData, useGetRestaurantsResponse, useGetRestaurantResponse, useGetGenresResponse } from './types'
 
-interface fetchDataResponse {
-    data: any
-    isLoading: boolean
-    isError: boolean
-}
 
-export function useGetGenres(): fetchDataResponse {
+export function useGetGenres(): useGetGenresResponse {
     async function fetcher(key: string) {
         const res = await fetch(key)
         return res.json()
     }
 
-    const { data, error, isLoading } = useSWR<GetGenreGroupData>(`${process.env.NEXT_PUBLIC_APP_URL}/api/genres`, fetcher)
+    const { data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_APP_URL}/api/genres`, fetcher)
 
     return {
-        data,
+        data: data === undefined ? null : data,
         isLoading,
         isError: error
     }
 }
 
-export function useGetRestaurants(gun?: string, region?: string, keyword?: string): fetchDataResponse {
+export function useGetRestaurants(gun?: string, region?: string, keyword?: string): useGetRestaurantsResponse {
     
     async function fetcher(key: string) {
         const res = await fetch(key)
@@ -39,14 +34,14 @@ export function useGetRestaurants(gun?: string, region?: string, keyword?: strin
     const { data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_APP_URL}/api/restaurants?${queryString}`, fetcher)
 
     return {
-        data,
+        data: data === undefined ? null : data,
         isLoading,
         isError: error
     }
 }
 
 
-export function useGetRestaurant(id: string): fetchDataResponse {
+export function useGetRestaurant(id: string): useGetRestaurantResponse {
     async function fetcher(key: string) {
         const res = await fetch(key)
         return res.json()
