@@ -11,7 +11,7 @@ export function useGetGenres() {
     const { data, error, isLoading } = useSWR<useGetGenresResponse>(`${process.env.NEXT_PUBLIC_APP_URL}/api/genres`, fetcher)
 
     return {
-        data: data === undefined ? null : data,
+        data,
         isLoading,
         isError: error
     }
@@ -34,7 +34,7 @@ export function useGetRestaurants(gun?: string, region?: string, keyword?: strin
     const { data, error, isLoading } = useSWR<useGetRestaurantsResponse>(`${process.env.NEXT_PUBLIC_APP_URL}/api/restaurants?${queryString}`, fetcher)
 
     return {
-        data: data === undefined ? null : data,
+        data,
         isLoading,
         isError: error
     }

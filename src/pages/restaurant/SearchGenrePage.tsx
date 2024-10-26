@@ -17,7 +17,7 @@ export const SearchGenrePage = (props: SearchGenrePageProps) => {
         return <p>Now Loading...</p>
     }
 
-    if ( data === null || data.restaurants.length === 0 ) {
+    if ( data === undefined || data.restaurants.length === 0 ) {
         return <p>表示するお店はありません。</p>
     }
 

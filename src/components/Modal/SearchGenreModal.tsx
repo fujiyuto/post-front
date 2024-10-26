@@ -46,7 +46,7 @@ const SearchGenre = () => {
         )
     }
 
-    if ( isError || data === null ) {
+    if ( isError || data === undefined ) {
         return <p>Error occur</p>
     }
 
