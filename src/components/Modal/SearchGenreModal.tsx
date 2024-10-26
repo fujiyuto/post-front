@@ -46,14 +46,16 @@ const SearchGenre = () => {
         )
     }
 
-    if ( isError || data === undefined ) {
+    if ( isError || data === null ) {
         return <p>Error occur</p>
     }
+
+    console.log(data)
 
     return (
         <>
             {
-                Object.entries(data).map(([key, value]: [string, GenreGroupDataValue], index: number) => {
+                Object.entries(data.genre_groups).map(([key, value]: [string, GenreGroupDataValue], index: number) => {
                     return (
                         <GenreGroupListItem key={index} unique={key} value={value}/>
                     )
@@ -66,6 +68,7 @@ const SearchGenre = () => {
 const GenreGroupListItem = (props: { unique: string, value: GenreGroupDataValue }) => {
     const { unique, value } = props
     const handleClose = useContext(GenreContext)
+    
     const genreList = value.genres.map(genre => {
         return (
             <li key={genre.unique_name}>

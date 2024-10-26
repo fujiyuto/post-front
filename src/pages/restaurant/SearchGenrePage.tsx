@@ -2,7 +2,7 @@
 
 import { useGetRestaurants } from '@/hooks'
 import React from 'react'
-import { GetRestaurant, GetRestaurants, Genre } from '@/types'
+import { GetRestaurant, Genre } from '@/types'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -17,13 +17,14 @@ export const SearchGenrePage = (props: SearchGenrePageProps) => {
         return <p>Now Loading...</p>
     }
 
-    if ( data.restaurants.length === 0 ) {
+    if ( data === null || data.restaurants.length === 0 ) {
         return <p>表示するお店はありません。</p>
     }
 
-    const restaurantList = data.restaurants.map((restaurant: GetRestaurant) => {
+    const restaurantList = data.restaurants.map(restaurant => {
         return (
             <ListItem
+                key={restaurant.id}
                 id={restaurant.id}
                 restaurant_name={restaurant.restaurant_name}
                 address={restaurant.address}
@@ -49,14 +50,14 @@ const ListItem = (props: ListItemProps) => {
     const { id, restaurant_name, address, price_min, price_max, post_num, point_avg, updated_at, genres } = props
     const genreList = genres.map((genre: Genre) => {
         return (
-            <>
-                <li className='text-xs text-black bg-neutral-200 flex justify-center items-center rounded-lg mr-1 p-1'>
+            <div key={genre.unique_name} className='flex'>
+                <div className='text-xs text-black bg-neutral-200 flex justify-center items-center rounded-lg mr-1 p-1'>
                     <Link
                         href={`/restaurants/genre/${genre.unique_name}`}
                     >{genre.genre_name}</Link>
-                </li>
-                <li className='text-xs text-black bg-neutral-200 flex justify-center items-center rounded-lg p-1'>あああ</li>
-            </>
+                </div>
+                <div className='text-xs text-black bg-neutral-200 flex justify-center items-center rounded-lg p-1'>あああ</div>
+            </div>
         )
     })
     return (
@@ -68,9 +69,9 @@ const ListItem = (props: ListItemProps) => {
                 alt=''
             />
             <div>
-                <ul className='flex'>
+                <div className='flex'>
                     {genreList}
-                </ul>
+                </div>
                 <h2 className='font-semibold text-lg'>
                     <Link
                         href={`/restaurants/${id}`}

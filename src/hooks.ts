@@ -2,13 +2,13 @@ import useSWR from 'swr'
 import { GenreGroupDataValue, GetGenreGroupData, useGetRestaurantsResponse, useGetRestaurantResponse, useGetGenresResponse } from './types'
 
 
-export function useGetGenres(): useGetGenresResponse {
+export function useGetGenres() {
     async function fetcher(key: string) {
         const res = await fetch(key)
         return res.json()
     }
 
-    const { data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_APP_URL}/api/genres`, fetcher)
+    const { data, error, isLoading } = useSWR<useGetGenresResponse>(`${process.env.NEXT_PUBLIC_APP_URL}/api/genres`, fetcher)
 
     return {
         data: data === undefined ? null : data,
@@ -17,7 +17,7 @@ export function useGetGenres(): useGetGenresResponse {
     }
 }
 
-export function useGetRestaurants(gun?: string, region?: string, keyword?: string): useGetRestaurantsResponse {
+export function useGetRestaurants(gun?: string, region?: string, keyword?: string) {
     
     async function fetcher(key: string) {
         const res = await fetch(key)
@@ -31,7 +31,7 @@ export function useGetRestaurants(gun?: string, region?: string, keyword?: strin
     }
     const queryString: string = new URLSearchParams(params).toString()
 
-    const { data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_APP_URL}/api/restaurants?${queryString}`, fetcher)
+    const { data, error, isLoading } = useSWR<useGetRestaurantsResponse>(`${process.env.NEXT_PUBLIC_APP_URL}/api/restaurants?${queryString}`, fetcher)
 
     return {
         data: data === undefined ? null : data,
@@ -41,13 +41,13 @@ export function useGetRestaurants(gun?: string, region?: string, keyword?: strin
 }
 
 
-export function useGetRestaurant(id: string): useGetRestaurantResponse {
+export function useGetRestaurant(id: string) {
     async function fetcher(key: string) {
         const res = await fetch(key)
         return res.json()
     }
 
-    const { data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_APP_URL}/api/restaurants/${id}`, fetcher)
+    const { data, error, isLoading } = useSWR<useGetRestaurantResponse>(`${process.env.NEXT_PUBLIC_APP_URL}/api/restaurants/${id}`, fetcher)
 
     return {
         data,

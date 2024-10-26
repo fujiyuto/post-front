@@ -46,57 +46,52 @@ export interface GetRestaurant extends Restaurant {
 }
 
 export interface useGetRestaurantsResponse extends fetchDataResponse {
-    data: {
-        restaurants: {
-            id: number
-            restaurant_name: string
-            address: string
-            price_min: number
-            price_max: number
-            point_avg: number
-            updated_at: string
-            thumbnail_image: string
-            genres: {
-                unique_name: string
-                genre_name: strng
-            }[]
+    restaurants: {
+        id: number
+        restaurant_name: string
+        address: string
+        price_min: number
+        price_max: number
+        point_avg: number
+        post_num: number
+        updated_at: string
+        thumbnail_image: string
+        genres: {
+            unique_name: string
+            genre_name: strng
         }[]
-    }
+    }[]
 }
 
 export interface useGetRestaurantResponse extends fetchDataResponse {
-    data: {
-        id: number
-        restaurant_name: string
-        zip_cd: string
-        address: string
-        address_detail: string
-        email: string
-        tel_no: string
-        price_min?: number
-        price_max?: number
-        post_num: number
-        point_avg: number
-        updated_at: string
-        images: {
-            [key: string]: {
-                name: string
-                image_urls: string[]
-            }
+    id: number
+    restaurant_name: string
+    zip_cd: string
+    address: string
+    address_detail: string
+    email: string
+    tel_no: string
+    price_min?: number
+    price_max?: number
+    post_num: number
+    point_avg: number
+    updated_at: string
+    images: {
+        [key: string]: {
+            name: string
+            image_urls: string[]
         }
     }
 }
 
 export interface useGetGenresResponse extends fetchDataResponse {
-    data: {
-        genre_groups: {
-            [key: string]: {
-                group_name: string
-                genres: {
-                    unique_name: string
-                    genre_name: string
-                }[]
-            }
+    genre_groups: {
+        [key: string]: {
+            group_name: string
+            genres: {
+                unique_name: string
+                genre_name: string
+            }[]
         }
     }
 }
