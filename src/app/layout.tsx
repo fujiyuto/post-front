@@ -29,10 +29,10 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${geistSans.variable} ${geistMono.variable} bg-subTheme`}
+                className={`${geistSans.variable} ${geistMono.variable} bg-white`}
             >
               <Header/>
-              <main className="w-3/4 lg:w-[768px] mx-auto mt-8">{children}</main>
+              <main className="w-4/5 xl:w-[1022px] mx-auto mt-8 px-16">{children}</main>
             </body>
         </html>
     );

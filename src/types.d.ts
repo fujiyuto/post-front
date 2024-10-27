@@ -82,6 +82,7 @@ export interface useGetRestaurantResponse extends fetchDataResponse {
             image_urls: string[]
         }
     }
+    genres: Genre[]
 }
 
 export interface useGetGenresResponse extends fetchDataResponse {

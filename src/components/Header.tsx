@@ -26,12 +26,12 @@ export const Header = () => {
     
     return (
         <header
-            className='bg-theme h-16 flex justify-between items-center px-7'
+            className='h-16 flex justify-between items-center px-7 text-theme border-b-4'
         >
             <Link href='/'>
-                <h1 className='text-4xl font-semibold text-white tracking-wider'>Tabelogish</h1>
+                <h1 className='text-4xl font-semibold tracking-wider'>Tabelogish</h1>
             </Link>
-            <ul className='flex text-lg text-white gap-8'>
+            <ul className='flex text-lg gap-8'>
                 <li className='hover:cursor-pointer hover:opacity-80' onClick={handleGenreOpen}>ジャンルで探す</li>
                 <li>地域で探す</li>
                 <li>

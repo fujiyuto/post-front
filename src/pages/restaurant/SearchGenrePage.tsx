@@ -51,12 +51,11 @@ const ListItem = (props: ListItemProps) => {
     const genreList = genres.map((genre: Genre) => {
         return (
             <div key={genre.unique_name} className='flex'>
-                <div className='text-xs text-black bg-neutral-200 flex justify-center items-center rounded-lg mr-1 p-1'>
+                <div className='text-xs text-black bg-neutral-200 flex justify-center items-center rounded-lg mr-1 p-1 hover:opacity-80'>
                     <Link
                         href={`/restaurants/genre/${genre.unique_name}`}
                     >{genre.genre_name}</Link>
                 </div>
-                <div className='text-xs text-black bg-neutral-200 flex justify-center items-center rounded-lg p-1'>あああ</div>
             </div>
         )
     })
