@@ -26,10 +26,6 @@ export interface GetGenreGroupData {
     [key: string]: GenreGroupDataValue
 }
 
-// export interface useGetGenresResponse extends fetchDataResponse {
-//     data: GetGenreGroupData | null
-// }
-
 export interface Restaurant {
     id: number
     restaurant_name: string
@@ -95,4 +91,30 @@ export interface useGetGenresResponse extends fetchDataResponse {
             }[]
         }
     }
+}
+
+interface RestaurantPost {
+    user: {
+        id: number
+        user_name: string
+        follower_num: number
+        post_num: number
+    },
+    post: {
+        id: number
+        title: string
+        visited_at: string
+        period_of_time: number
+        points: number
+        price_min: number
+        price_max: number
+        image_url1: string|null
+        image_url2: string|null
+        image_url3: string|null
+        created_at: string
+    }
+}
+
+export interface GetRestaurantPostsResponse {
+    posts: RestaurantPost[]
 }
