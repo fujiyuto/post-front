@@ -93,7 +93,8 @@ export interface useGetGenresResponse extends fetchDataResponse {
     }
 }
 
-interface RestaurantPost {
+// 店への投稿一覧
+export interface RestaurantPost {
     user: {
         id: number
         user_name: string
@@ -103,14 +104,12 @@ interface RestaurantPost {
     post: {
         id: number
         title: string
-        visited_at: string
+        visited_at: string|null
         period_of_time: number
         points: number
         price_min: number
         price_max: number
-        image_url1: string|null
-        image_url2: string|null
-        image_url3: string|null
+        image_url: string|null
         created_at: string
     }
 }

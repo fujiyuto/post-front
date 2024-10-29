@@ -3,7 +3,7 @@ import { NextResponse } from "next/server"
 
 export async function GET( request: Request, { params }: { params: { id: string } } ) {
     
-    const res = await axiosInstance.get(`/api/posts/${params.id}`)
+    const res = await axiosInstance.get(`/api/posts/restaurant/${params.id}`)
 
     return NextResponse.json(res.data)
 }
