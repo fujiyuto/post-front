@@ -1,8 +1,9 @@
 import React from 'react'
+import { PostDetailPage } from '@/pages/post/PostDetailPage'
 
-const Page = ({ id }: { id: number }) => {
+const Page = ({ params }: { params: { id: string } }) => {
     return (
-        <div>Page</div>
+        <PostDetailPage id={params.id}/>
     )
 }
 

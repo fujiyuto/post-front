@@ -117,3 +117,21 @@ export interface RestaurantPost {
 export interface GetRestaurantPostsResponse {
     posts: RestaurantPost[]
 }
+
+// 投稿詳細取得
+export interface GetPostResponse {
+    id: number
+    user_id: number
+    user_name: string
+    restaurant_id: number
+    restaurant_name: string
+    title: string
+    content: string
+    visited_at: string|null
+    period_of_time: number
+    points: number
+    price_min: number
+    price_max: number
+    images: string[]
+    created_at: string
+}
