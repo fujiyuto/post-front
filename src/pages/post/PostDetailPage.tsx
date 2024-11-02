@@ -29,19 +29,21 @@ export const PostDetailPage = async (props: PostDetailPageProps) => {
         points: 3.6,
         price_min: 1000,
         price_max: 4000,
-        images: [ null, null, null ],
+        images: [ 'https://placehold.jp/300*200.png', 'https://placehold.jp/300*200.png', 'https://placehold.jp/300*200.png','https://placehold.jp/300*200.png', 'https://placehold.jp/300*200.png', 'https://placehold.jp/300*200.png','https://placehold.jp/300*200.png', 'https://placehold.jp/300*200.png', 'https://placehold.jp/300*200.png' ],
         created_at: '2024-10-29'
     }
 
     const imageList: React.ReactNode[] = []
     if ( data.images.length !== 0 ) {
-        data.images.map((image_url: string|null, index: number) => {
+        data.images.forEach((image_url: string|null, index: number) => {
             if ( image_url !== null ) {
-                return (
+                imageList.push(
                     <div key={index}>
                         <Image
                             alt=''
                             src={image_url}
+                            width={150}
+                            height={150}
                         />
                     </div>
                 )
@@ -65,7 +67,7 @@ export const PostDetailPage = async (props: PostDetailPageProps) => {
                     )
                 }
             </div>
-            <div className='px-4 py-2'>
+            <div className='p-4'>
                 <h1 className='text-2xl font-bold'>{data.title}</h1>
                 <div className='flex gap-4 items-center my-2'>
                     <Star point={data.points}/>
@@ -83,10 +85,10 @@ export const PostDetailPage = async (props: PostDetailPageProps) => {
                     >{data.user_name}</Link>
                 </p>
             </div>
-            <div className='px-4 pt-1'>
-                <p className='text-sm'>{data.created_at}</p>
+            <div className='px-4 pt-4'>
+                <p className='text-sm'>投稿日:{data.created_at}</p>
                 <p className='pt-4'>{data.content}</p>
-                <div className='flex'>
+                <div className= 'pt-4 grid grid-cols-4 gap-4'>
                     {
                         imageList.length !== 0 && imageList
                     }

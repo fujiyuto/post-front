@@ -8,6 +8,8 @@ export function useGetGenres() {
         return res.json()
     }
 
+    console.log('aaa')
+
     const { data, error, isLoading } = useSWR<useGetGenresResponse>(`${process.env.NEXT_PUBLIC_APP_URL}/api/genres`, fetcher)
 
     return {

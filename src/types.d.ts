@@ -1,6 +1,7 @@
 import { ButtonGroupPropsVariantOverrides } from "@mui/material"
 
 interface fetchDataResponse {
+    data: any
     isLoading: boolean
     isError: boolean
 }
@@ -134,4 +135,35 @@ export interface GetPostResponse {
     price_max: number
     images: string[]
     created_at: string
+}
+
+// ユーザー詳細取得
+export interface UserDetailResponsePost {
+    id: number
+    restaurant_id: number
+    restaurant_name: string
+    title: string
+    visited_at: string|null
+    period_of_time: number
+    points: number
+    price_min: number
+    price_max: number
+    image_url: string|null
+    created_at: string
+}
+
+export interface GetUserDetailResponse {
+    user: {
+        user_name: string
+        email: string
+        tel_no: string
+        birthday: string
+        gender: string
+        user_type: string
+        post_num: number
+        follower_num: number
+        follow_num: number
+        visited_num: number
+    }
+    posts: UserDetailResponsePost[]
 }

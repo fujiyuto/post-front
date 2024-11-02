@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useContext } from 'react'
+import React, { useContext, memo, forwardRef } from 'react'
 import { useGetGenres } from '@/hooks'
 import { GenreGroupDataValue } from '@/types'
 import Link from 'next/link'
@@ -13,7 +13,7 @@ interface SearchGenreModalProps {
     open: boolean
 }
 
-export const SearchGenreModal = (props: SearchGenreModalProps) => {
+export const SearchGenreModal = memo((props: SearchGenreModalProps) => {
     const { open } = props
     const handleClose = useContext(GenreContext)
     return (
@@ -31,9 +31,9 @@ export const SearchGenreModal = (props: SearchGenreModalProps) => {
             </Fade>
         </Modal>
     )
-}
+})
 
-const SearchGenre = () => {
+const SearchGenre = memo(() => {
     const { data, isLoading, isError } = useGetGenres()
 
     if ( isLoading ) {
@@ -50,8 +50,6 @@ const SearchGenre = () => {
         return <p>Error occur</p>
     }
 
-    console.log(data)
-
     return (
         <>
             {
@@ -63,7 +61,7 @@ const SearchGenre = () => {
             }
         </>
     )   
-}
+})
 
 const GenreGroupListItem = (props: { unique: string, value: GenreGroupDataValue }) => {
     const { unique, value } = props
@@ -95,7 +93,7 @@ interface BackdropProps {
     open: boolean
     onClick: () => void
 }
-const Backdrop = React.forwardRef<HTMLDivElement,BackdropProps>((props, ref) => {
+const Backdrop = forwardRef<HTMLDivElement,BackdropProps>((props, ref) => {
     const { open, onClick } = props
     return (
        <div 

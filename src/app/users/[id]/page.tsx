@@ -1,9 +1,10 @@
 import React from 'react'
+import { UserDetailPage } from '@/pages/user/UserDetailPage'
 
-const Page = () => {
-  return (
-    <div>ユーザーの詳細ページ</div>
-  )
+const Page = ({ params }: { params: { id: string } }) => {
+    return (
+        <UserDetailPage id={params.id}/>
+    )
 }
 
 export default Page
