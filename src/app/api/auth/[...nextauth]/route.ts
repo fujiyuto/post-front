@@ -32,13 +32,8 @@ export const authOptions: AuthOptions = {
                     }
                 )
                 .then( res => {
-                    console.log(res.data)
-                    const user = { 
-                        id: "1", 
-                        name: 'taro',
-                        email: 'saiga0114@gmail.com'
-                    }
-                    return user
+                    console.log(`route.ts側のレス: ${res.data}`)
+                    return res.data
                 })
                 .catch( err => {
                     console.log(err.message)

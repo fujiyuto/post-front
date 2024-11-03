@@ -17,7 +17,7 @@ const config: Config = {
         white: '#ffffff',
         red: '#ff0000',
         gray: '#d5d5d5',
-        formLine: '#c8c8c8'
+        formLine: '#e5e5e5'
       },
     },
   },

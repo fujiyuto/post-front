@@ -5,6 +5,8 @@ import { FormControl, Button, Input } from '@mui/base'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { HelperText } from '@/components/HelperText'
+import { axiosInstance } from '@/app/api/axiosConf'
+import { signIn } from 'next-auth/react'
 
 
 export const LoginPage = () => {
@@ -15,13 +17,9 @@ export const LoginPage = () => {
     useEffect(() => {
         
         const getCsrf = async () => {
-            const res = await fetch(
-                `${process.env.NEXT_PUBLIC_APP_URL}/api/csrf`,
-                {
-                    method: "GET",
-                } 
-            )
+            const res = await axiosInstance.get('/sanctum/csrf-cookie')
         }
+
         getCsrf()
         
     }, [])
@@ -33,16 +31,18 @@ export const LoginPage = () => {
         const form = e.currentTarget
         const formData = new FormData(e.currentTarget)
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/login`, { method: 'POST', body: formData })
+        // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, { method: 'POST', body: formData })
 
-        const result = await res.json()
+        const res = await signIn('credentials', { redirect: false, formData })
+        console.log(`ログインページ側のレス: ${res}`)
 
-        if ( res.status != 200 ) {
-            setIsDispHelperText(true)
-            setHelperText(result.message)
-        } else {
-            router.push('/')
-        }
+        // if ( res.status != 200 ) {
+        //     setIsDispHelperText(true)
+        //     setHelperText(result.message)
+        // } else {
+            
+        //     router.push('/')
+        // }
     }
 
     return (
@@ -67,7 +67,7 @@ export const LoginPage = () => {
                                                 type='email'
                                                 slotProps={{
                                                     input: {
-                                                        className: 'w-full shadow border-formLine rounded p-1.5 focus:outline-none focus:ring focus:border-gray-300 focus:ring-slate-300 focus:ring-1 autofill:bg-white'
+                                                        className: 'w-full border-2 border-formLine border-1.5 rounded p-1.5 focus:outline-none focus:ring focus:border-gray-300 focus:ring-slate-300 focus:ring-1 autofill:bg-white'
                                                     }
                                                 }}
                                             />
@@ -80,7 +80,7 @@ export const LoginPage = () => {
                                             type='password'
                                             slotProps={{
                                                 input: {
-                                                    className: 'w-full shadow border-formLine rounded p-1.5 focus:outline-none focus:ring focus:border-gray-300 focus:ring-slate-300 focus:ring-1'
+                                                    className: 'w-full shadow border-2 border-formLine rounded p-1.5 focus:outline-none focus:ring focus:border-gray-300 focus:ring-slate-300 focus:ring-1'
                                                 }
                                             }}
                                         />

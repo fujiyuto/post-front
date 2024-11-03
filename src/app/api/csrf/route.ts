@@ -8,5 +8,6 @@ export async function GET( request: Request ) {
     result.headers["set-cookie"]?.forEach(cookie => {
         response.headers.append('Set-Cookie', cookie)
     })
+    
     return response
 }
