@@ -21,28 +21,21 @@ export const LoginPage = () => {
         }
 
         getCsrf()
-        
+
     }, [])
 
-    const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-    
-        e.preventDefault()
+    const loginAction = async (formData: FormData) => {
+        const res = await signIn("credentials", { 
+            callbackUrl: '/mypage',
+            user_name: formData.get('user_name'),
+            password: formData.get('password')
+        })
 
-        const form = e.currentTarget
-        const formData = new FormData(e.currentTarget)
-
-        // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, { method: 'POST', body: formData })
-
-        const res = await signIn('credentials', { redirect: false, formData })
-        console.log(`ログインページ側のレス: ${res}`)
-
-        // if ( res.status != 200 ) {
-        //     setIsDispHelperText(true)
-        //     setHelperText(result.message)
-        // } else {
-            
-        //     router.push('/')
-        // }
+        if ( res === undefined || res.status !== 200 ) {
+            setIsDispHelperText(true)
+            const result = res?.error
+            console.log(result)
+        }
     }
 
     return (
@@ -51,7 +44,7 @@ export const LoginPage = () => {
                 <h3 className='mb-6 text-2xl font-semibold text-center'>ログイン</h3>
                 <div className='flex justify-center items-center divide-x divide-solid divide-gray'>
                     <div className='w-1/2 flex flex-col items-center gap-24'>
-                        <form className='w-7/12' onSubmit={handleSubmit} method='POST'>
+                        <form className='w-7/12' action={loginAction}>
                             <div className='flex flex-col gap-10'>
                                 <div className='flex flex-col gap-6'>
                                     <div className='flex flex-col gap-2'>
@@ -61,10 +54,10 @@ export const LoginPage = () => {
                                             )
                                         }
                                         <FormControl className='text-black' required>
-                                            <label htmlFor="" className='font-semibold'>メールアドレス</label>
+                                            <label htmlFor="" className='font-semibold'>ユーザー名</label>
                                             <Input
-                                                name='email'
-                                                type='email'
+                                                name='user_name'
+                                                type='text'
                                                 slotProps={{
                                                     input: {
                                                         className: 'w-full border-2 border-formLine border-1.5 rounded p-1.5 focus:outline-none focus:ring focus:border-gray-300 focus:ring-slate-300 focus:ring-1 autofill:bg-white'

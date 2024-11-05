@@ -8,58 +8,74 @@ import { googleClientId, googleClientSecret } from "@/consts";
 
 export const authOptions: AuthOptions = {
     debug: true,
+    secret: process.env.AUTH_SECRET,
     providers: [
         GoogleProvider({
             clientId: googleClientId,
             clientSecret: googleClientSecret
         }),
         CredentialsProvider({
-            id: 'credential',
+            id: 'credentials',
             name: 'Credentials',
             credentials: {
-                email: { label: "メールアドレス", type: "email" },
+                user_name: { label: "ユーザー名" },
                 password: { label: "パスワード", type: "password" }
             },
-            async authorize(credentials, req) {
-                const res = await axiosInstance(
-                    `${process.env.API_URL}/api/login`,
-                    {
-                        method: 'POST',
-                        data: {
-                            email: credentials?.email,
-                            password: credentials?.password
-                        }
-                    }
-                )
-                .then( res => {
-                    console.log(`route.ts側のレス: ${res.data}`)
-                    return res.data
-                })
-                .catch( err => {
-                    console.log(err.message)
-                    return null
-                })
+            async authorize(credentials) {
+                // const res = await axiosInstance(
+                //     `${process.env.API_URL}/api/login`,
+                //     {
+                //         method: 'POST',
+                //         data: {
+                //             user_name: credentials?.user_name,
+                //             password: credentials?.password
+                //         }
+                //     }
+                // )
+                // .then( res => {
+                //     console.log(`route.ts側のレス: ${res.data}`)
+                //     return res.data
+                // })
+                // .catch( err => {
+                //     console.log(err.message)
+                //     return null
+                // })
+                // const res = await axiosInstance.post(
+                //     `${process.env.NEXT_PUBLIC_API_URL}/api/login`,
+                //     {
+                //         method: 'POST',
+                //         data: {
+                //             user_name: credentials?.user_name,
+                //             password: credentials?.password
+                //         }
+                //     }
+                // )
+                const res = await axiosInstance.post( '/api/login', credentials )
 
-                return res
+                console.log(res.data)
+
+                if ( !res.data ) return null
+
+                return res.data
             }
         })   
     ],
-    session: {
-        strategy: "jwt",
-        maxAge: 30 * 24 * 60 * 60
-    },
-    jwt: {
-        maxAge: 30 * 24 * 60 * 60
-    },
-    pages: {
-        signIn: '/users/login',
-        error: '/users/create'
-    },
-    callbacks: {
-        session({ session }) {
-            return session
-        }
-    },
+    // session: {
+    //     strategy: "jwt",
+    //     maxAge: 30 * 24 * 60 * 60
+    // },
+    // jwt: {
+    //     maxAge: 30 * 24 * 60 * 60
+    // },
+    // pages: {
+    //     // signIn: '/users/login',
+    //     error: '/users/create'
+    // },
+    // callbacks: {
+    //     session({ session }) {
+    //         return session
+    //     }
+    // },
 }
 
 const handler = NextAuth(authOptions)

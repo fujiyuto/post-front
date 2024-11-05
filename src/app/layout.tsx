@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Header } from "@/components/Header";
-import { ErrorBoundary } from "next/dist/client/components/error-boundary";
+import { NextAuthProvider } from "@/components/NextAuthProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,8 +31,10 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} bg-white`}
             >
-              <Header/>
-              <main className="w-4/5 xl:w-[1022px] mx-auto mt-8 px-16">{children}</main>
+                <NextAuthProvider>
+                    <Header/>
+                </NextAuthProvider>
+                <main className="w-4/5 xl:w-[1022px] mx-auto mt-8 px-16">{children}</main>
             </body>
         </html>
     );

@@ -7,6 +7,8 @@ import { Modal } from '@mui/base'
 import { Fade } from '@mui/material';
 import { SearchGenre } from './Search/Search'
 import { SearchGenreModal } from './Modal/SearchGenreModal'
+import { signOut, useSession } from 'next-auth/react'
+import { Button } from '@mui/base'
 
 export const GenreContext = createContext<() => void>(() => {})
 export const LocateContext = createContext<() => void>(() => {})
@@ -23,6 +25,13 @@ export const Header = () => {
     const [openKeyword, setOpenkeyword] = useState<boolean>(false)
     const handleKeywordOpen = () => setOpenkeyword(true)
     const handleKeywordClose = () => setOpenkeyword(false)
+
+    const { data: session, status } = useSession()
+
+    const logoutAction = async (): Promise<void> => {
+        const data = await signOut({redirect: false, callbackUrl: 'http://localhost:3000/'})
+
+    }
     
     return (
         <header
@@ -34,15 +43,33 @@ export const Header = () => {
             <ul className='flex text-lg gap-8'>
                 <li className='hover:cursor-pointer hover:opacity-80' onClick={handleGenreOpen}>ジャンルで探す</li>
                 <li>地域で探す</li>
-                <li>
-                    <Link href='/mypage'>マイページ</Link>
-                </li>
-                <li>
-                    <Link href='/users/create'>新規会員登録</Link>
-                </li>
-                <li>
-                    <Link href='/users/login'>ログイン</Link>
-                </li>
+                {
+                    status === 'authenticated' && (
+                        <>
+                            <li>
+                                <Link href='/mypage'>マイページ</Link>
+                            </li>
+                            <li>
+                                <form action={logoutAction}>
+                                    <Button type='submit'>ログアウト</Button>
+                                </form>
+                            </li>
+                        </>
+                    )
+                }
+                {
+                    status === 'unauthenticated' && (
+                        <>
+                            <li>
+                                <Link href='/users/create'>新規会員登録</Link>
+                            </li>
+                            <li>
+                                <Link href='/users/login'>ログイン</Link>
+                            </li>
+                        </>
+                    )
+                }
+                
             </ul>
             <GenreContext.Provider value={handleGenreClose}>
                 <SearchGenreModal
