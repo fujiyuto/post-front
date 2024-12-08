@@ -1,12 +1,16 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import { UserDetailResponsePost, GetUserDetailResponse } from '@/types'
 import { PostListItem } from '@/components/ListItem/PostListItem'
+import { Button } from '@mui/base'
+import { Drawer } from '@mui/material'
 
 interface UserDeatailPageProps {
     id: string
 }
 
-export const UserDetailPage = async (props: UserDeatailPageProps) => {
+export const UserDetailPage = (props: UserDeatailPageProps) => {
     const { id } = props
     // const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/users/${id}`, { method: 'get' })
     // const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/users/${id}`, { method: 'get', cache: 'no-store' })
@@ -134,6 +138,9 @@ export const UserDetailPage = async (props: UserDeatailPageProps) => {
             />
         )
     })
+
+    const [open, setOpen] = useState<boolean>(false)
+
     return (
         <div className='text-black'>
             <h2 className='text-3xl mb-4'>{data.user.user_name}</h2>
@@ -143,10 +150,13 @@ export const UserDetailPage = async (props: UserDeatailPageProps) => {
                         <h3>投稿数</h3>
                         <p>{data.user.post_num}</p>
                     </div>
-                    <div className='text-center'>
+                    <Button
+                        className='text-center'
+                        onClick={() => setOpen(true)}
+                    >
                         <h3>フォロワー数</h3>
                         <p>{data.user.follower_num}</p>
-                    </div>
+                    </Button>
                     <div className='text-center'>
                         <h3>フォロー数</h3>
                         <p>{data.user.follow_num}</p>
