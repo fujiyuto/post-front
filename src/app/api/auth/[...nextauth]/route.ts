@@ -10,10 +10,10 @@ export const authOptions: AuthOptions = {
     debug: true,
     secret: process.env.AUTH_SECRET,
     providers: [
-        GoogleProvider({
-            clientId: googleClientId,
-            clientSecret: googleClientSecret
-        }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
         CredentialsProvider({
             id: 'credentials',
             name: 'Credentials',
@@ -50,7 +50,7 @@ export const authOptions: AuthOptions = {
                 //         }
                 //     }
                 // )
-                const res = await axiosInstance.post( '/api/login', credentials )
+                
 
                 console.log(res.data)
 

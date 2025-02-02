@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { HelperText } from '@/components/HelperText'
 import { axiosInstance } from '@/app/api/axiosConf'
 import { signIn } from 'next-auth/react'
-
+import GoogleLoginButton from '@/components/GoogleLoginButton'
 
 export const LoginPage = () => {
     const router = useRouter()
@@ -17,9 +17,13 @@ export const LoginPage = () => {
     useEffect(() => {
         
         const getCsrf = async () => {
-            const res = await axiosInstance.get('/sanctum/csrf-cookie')
-        }
-
+            try {
+                await axiosInstance.get('http://localhost:5173/sanctum/csrf-cookie', { withCredentials: true });
+                console.log('CSRF クッキー取得成功');
+            } catch (error) {
+                console.error('CSRF クッキー取得失敗:', error);
+            }
+        };
         getCsrf()
 
     }, [])
@@ -85,6 +89,10 @@ export const LoginPage = () => {
                                 >ログイン</Button>
                             </div>
                         </form>
+                        {/* Googleログインボタン追加 */}
+                        <div className="mt-6">
+                            <GoogleLoginButton />
+                        </div>
                         <div className='flex gap-10'>
                             <div className='hover:opacity-70'>
                                 <Link
